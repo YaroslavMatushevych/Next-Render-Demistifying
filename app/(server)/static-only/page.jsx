@@ -1,8 +1,8 @@
 import { fetchStockData, fetchWeatherData, fetchNewsData, fetchCryptoData } from '@/lib/api-utils';
-import StockCard from '@/components/client/StockCard.client';
-import WeatherCard from '@/components/client/WeatherCard.client';
-import NewsCard from '@/components/client/NewsCard.client';
-import CryptoCard from '@/components/client/CryptoCard.client';
+import StockCard from '@/components/server/StockCard.server';
+import WeatherCard from '@/components/server/WeatherCard.server';
+import NewsCard from '@/components/server/NewsCard.server';
+import CryptoCard from '@/components/server/CryptoCard.server';
 
 export const dynamic = 'force-static'; // Next.js builds at compile time
 
