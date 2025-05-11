@@ -11,6 +11,7 @@ import WeatherCard from '@/components/server/WeatherCard.server';
 import NewsCard from '@/components/server/NewsCard.server';
 import CryptoCard from '@/components/server/CryptoCard.server';
 
+export const dynamic = 'force-dynamic';
 
 function LoadingCard({ label }) {
     return (

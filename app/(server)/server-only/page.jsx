@@ -10,6 +10,8 @@ import WeatherCard from '@/components/server/WeatherCard.server';
 import NewsCard from '@/components/server/NewsCard.server';
 import CryptoCard from '@/components/server/CryptoCard.server';
 
+export const dynamic = 'force-dynamic';
+
 // Traditional server-side rendering - all data must be fetched before any rendering
 export default async function ServerOnlyPage() {
     // All data is fetched in parallel, but page doesn't render until ALL fetches complete
