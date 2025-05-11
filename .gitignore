@@ -1,0 +1,88 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/libs/dist
+/tmp
+/out-tsc
+/libs/header/build
+*.tsbuildinfo
+**/public/sprite-*.svg
+**/public/pictograms-sprite-*.svg
+
+# dependencies
+/node_modules
+# todo: add yarn.lock once renovate supports bun out of the box
+#yarn.lock
+package-lock.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+*.log
+/typings
+.env
+lefthook-local.yml
+/tests-output
+jest-perf.csv
+scripts/testreports/data/*
+scripts/testreports/out/*
+vercel_comment.txt
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Nx
+migrations.json
+.nx/cache
+.nx/workspace-data
+
+# Static universal builds
+libs/header/dist
+libs/footer/dist
+
+# Next.js
+.next
+
+# Runtime files
+__BUILD_TIME_DATAFILE.json
+__BUILD_TIME_NEXT_CONFIG.json
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Ignore lock files, as plan / apply steps are managed via CI only
+.terraform.lock.hcl
+
+# Ignore this file, which contains the canary scripts
+canaries.zip
+
+.task
+
+# Ignore download.html files under cypress/downloads
+**/cypress/downloads/downloads.html
