@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+.card {
+  @apply bg-white shadow-md rounded-lg p-6 mb-4;
+}
+
+.btn {
+  @apply px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors;
+}
+
+.heading {
+  @apply text-2xl font-bold mb-4 text-gray-800;
+}
+
+.subheading {
+  @apply text-xl font-semibold mb-3 text-gray-700;
+}
+
+.data-loading {
+  @apply animate-pulse bg-gray-200 rounded h-6 w-full mb-2;
+}
+
+@keyframes loading {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+.animate-typing {
+  animation: typing 8s steps(50, end);
+}
