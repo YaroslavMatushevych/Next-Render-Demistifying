@@ -24,7 +24,6 @@ export default function RootLayout({ children }) {
                   <Link href="/isr" className="hover:text-indigo-600">ISR</Link>
                   <Link href="/hybrid" className="hover:text-indigo-600">Hybrid</Link>
                   <Link href="/comparison" className="hover:text-indigo-600">Comparison</Link>
-                  <Link href="/benchmark" className="hover:text-indigo-600">Benchmark</Link>
                 </div>
               </div>
             </div>
