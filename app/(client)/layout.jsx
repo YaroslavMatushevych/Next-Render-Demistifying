@@ -2,11 +2,6 @@
 import '@/app/globals.css';
 import Link from 'next/link';
 
-export const metadata = {
-    title: 'Next.js 15 Performance Comparison',
-    description: 'Real-world comparison of Next.js 15 rendering strategies',
-};
-
 export default function RootLayout({ children }) {
     return (
         <div className="min-h-screen bg-gray-50">
