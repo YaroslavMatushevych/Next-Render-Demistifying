@@ -1,11 +1,6 @@
 import '@/app/globals.css';
 import Link from 'next/link';
 
-export const metadata = {
-  title: 'Next.js 15 Performance Comparison',
-  description: 'Real-world comparison of Next.js 15 rendering strategies',
-};
-
 export default function RootLayout({ children }) {
   return (
         <div className="min-h-screen bg-gray-50">
@@ -14,7 +9,7 @@ export default function RootLayout({ children }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between h-16 items-center">
                 <Link href="/" className="text-xl font-bold text-indigo-600">
-                  Next.js 15 Performance
+                  Next.js 15 Render Demistifying
                 </Link>
                 <div className="hidden sm:flex gap-4 text-sm font-medium text-gray-600">
                   <Link href="/streaming" className="hover:text-indigo-600">Streaming</Link>
