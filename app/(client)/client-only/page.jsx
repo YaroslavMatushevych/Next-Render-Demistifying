@@ -9,12 +9,12 @@ import dynamic from 'next/dynamic';
 
 // SECTION 1: CLIENT COMPONENTS WITH SSR: FALSE AND DYNAMIC IMPORT
 // These components will only render on the client and never on the server
-const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), { 
-  ssr: false,
+const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), {
+    ssr: false,
 });
 
-const WeatherCardNoSSR = dynamic(() => import('@/components/client/WeatherCard.client'), { 
-  ssr: false,
+const WeatherCardNoSSR = dynamic(() => import('@/components/client/WeatherCard.client'), {
+    ssr: false,
 });
 
 // SECTION 2: REGULAR CLIENT COMPONENTS WITHOUT SSR: FALSE
@@ -27,7 +27,7 @@ export default function ClientComponentsComparison() {
     // State for each data type
     const [stockData, setStockData] = useState(undefined);
     const [weatherData, setWeatherData] = useState(undefined);
-    
+
     // Loading states
     const [stockLoading, setStockLoading] = useState(true);
     const [weatherLoading, setWeatherLoading] = useState(true);
@@ -127,18 +127,18 @@ export default function ClientComponentsComparison() {
                         <h2 className="font-bold text-xl text-blue-800 mb-3">No SSR Components Explained</h2>
                         <div className="space-y-4">
                             <p className="text-blue-900">
-                                <code className="bg-blue-100 px-1 rounded">ssr: false</code> with dynamic import creates 
+                                <code className="bg-blue-100 px-1 rounded">ssr: false</code> with dynamic import creates
                                 components that only render on the client and never on the server:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-blue-200">
                                 <pre className="bg-blue-50 p-3 rounded overflow-x-auto text-sm">
-{`const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), { 
+                                    {`const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), { 
   ssr: false,
   loading: () => <div>Loading Stock Component...</div>
 });`}
                                 </pre>
-                                
+
                                 <div className="mt-4">
                                     <h3 className="font-semibold text-blue-700 mb-2">Key characteristics:</h3>
                                     <ul className="list-disc pl-5 space-y-1 text-blue-800">
@@ -149,7 +149,7 @@ export default function ClientComponentsComparison() {
                                         <li><strong>Better for SEO-insensitive content:</strong> Like dashboards or authenticated areas</li>
                                     </ul>
                                 </div>
-                                
+
                                 <div className="mt-4 p-3 bg-blue-50 rounded text-blue-800">
                                     <h4 className="font-semibold mb-1">What's happening under the hood:</h4>
                                     <ol className="list-decimal pl-5 space-y-1 text-sm">
@@ -163,22 +163,22 @@ export default function ClientComponentsComparison() {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-green-50 rounded-lg border border-green-200">
                         <h2 className="font-bold text-xl text-green-800 mb-3">Regular Client Components Explained</h2>
                         <div className="space-y-4">
                             <p className="text-green-900">
                                 Regular client components are imported directly and participate in server-side rendering:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-green-200">
                                 <pre className="bg-green-50 p-3 rounded overflow-x-auto text-sm">
-{`'use client';
+                                    {`'use client';
 
 // Regular direct import
 import StockCardClient from '@/components/client/StockCardRegular.client';`}
                                 </pre>
-                                
+
                                 <div className="mt-4">
                                     <h3 className="font-semibold text-green-700 mb-2">Key characteristics:</h3>
                                     <ul className="list-disc pl-5 space-y-1 text-green-800">
@@ -189,7 +189,7 @@ import StockCardClient from '@/components/client/StockCardRegular.client';`}
                                         <li><strong>Better for SEO-critical content:</strong> Like landing pages or public content</li>
                                     </ul>
                                 </div>
-                                
+
                                 <div className="mt-4 p-3 bg-green-50 rounded text-green-800">
                                     <h4 className="font-semibold mb-1">What's happening under the hood:</h4>
                                     <ol className="list-decimal pl-5 space-y-1 text-sm">
@@ -203,7 +203,7 @@ import StockCardClient from '@/components/client/StockCardRegular.client';`}
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-purple-50 rounded-lg border border-purple-200">
                         <h2 className="font-bold text-xl text-purple-800 mb-3">When to Use Each Approach</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -217,7 +217,7 @@ import StockCardClient from '@/components/client/StockCardRegular.client';`}
                                     <li>Component needs to be lazy-loaded for performance</li>
                                 </ul>
                             </div>
-                            
+
                             <div className="bg-white p-4 rounded border border-purple-100">
                                 <h3 className="font-semibold text-purple-700 mb-2">Use Regular Client Components when:</h3>
                                 <ul className="list-disc pl-5 space-y-1 text-purple-800">
@@ -230,24 +230,24 @@ import StockCardClient from '@/components/client/StockCardRegular.client';`}
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-yellow-50 rounded-lg border border-yellow-200">
                         <h2 className="font-bold text-xl text-yellow-800 mb-3">Dynamic Import Without ssr: false</h2>
                         <div className="space-y-4">
                             <p className="text-yellow-900">
-                                You can also use dynamic import <em>without</em> setting <code className="bg-yellow-100 px-1 rounded">ssr: false</code> 
+                                You can also use dynamic import <em>without</em> setting <code className="bg-yellow-100 px-1 rounded">ssr: false</code>
                                 to get code splitting while still preserving server-side rendering:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-yellow-200">
                                 <pre className="bg-yellow-50 p-3 rounded overflow-x-auto text-sm">
-{`// Dynamic import WITH server-side rendering
+                                    {`// Dynamic import WITH server-side rendering
 const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
   // ssr: true is the default, no need to specify
   loading: () => <div>Loading...</div>
 });`}
                                 </pre>
-                                
+
                                 <div className="mt-4">
                                     <h3 className="font-semibold text-yellow-700 mb-2">Key characteristics:</h3>
                                     <ul className="list-disc pl-5 space-y-1 text-yellow-800">
@@ -260,13 +260,13 @@ const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-red-50 rounded-lg border border-red-200">
                         <h2 className="font-bold text-xl text-red-800 mb-3">Common Pitfalls to Avoid</h2>
                         <div className="bg-white p-4 rounded border border-red-100">
                             <ul className="list-disc pl-5 space-y-2 text-red-800">
                                 <li>
-                                    <strong>Browser-only code in SSR components:</strong> Using window/document in regular client 
+                                    <strong>Browser-only code in SSR components:</strong> Using window/document in regular client
                                     components without checks can cause SSR errors
                                 </li>
                                 <li>
@@ -285,18 +285,18 @@ const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Explanations for the presentation */}
                 <div className="mt-8 space-y-6">
                     <div className="p-6 bg-purple-50 rounded-lg border border-purple-200">
                         <h2 className="font-bold text-xl text-purple-800 mb-3">Understanding Client Components</h2>
                         <div className="space-y-4">
                             <p className="text-purple-900">
-                                <strong>What are Client Components?</strong> Client Components in Next.js are React components 
-                                that run in the browser. They're marked with the <code className="bg-purple-100 px-1 rounded">'use client'</code> directive 
+                                <strong>What are Client Components?</strong> Client Components in Next.js are React components
+                                that run in the browser. They're marked with the <code className="bg-purple-100 px-1 rounded">'use client'</code> directive
                                 at the top of the file.
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-purple-200">
                                 <h3 className="font-semibold text-purple-700 mb-2">Key Characteristics:</h3>
                                 <ul className="list-disc pl-5 space-y-1 text-purple-900">
@@ -309,24 +309,24 @@ const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-blue-50 rounded-lg border border-blue-200">
                         <h2 className="font-bold text-xl text-blue-800 mb-3">NoSSR Wrapper for Client Components</h2>
                         <div className="space-y-4">
                             <p className="text-blue-900">
-                                In this demo, we're using <code className="bg-blue-100 px-1 rounded">next/dynamic</code> to create a NoSSR wrapper 
+                                In this demo, we're using <code className="bg-blue-100 px-1 rounded">next/dynamic</code> to create a NoSSR wrapper
                                 that prevents our client components from running on the server:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-blue-200 text-blue-900">
                                 <div className="mb-3">
                                     <pre className="bg-blue-50 p-2 block rounded overflow-x-auto">
-                                    <code>
-{`const StockCardClient = dynamic(() => import('@/components/client/StockCard.client'), { 
+                                        <code>
+                                            {`const StockCardClient = dynamic(() => import('@/components/client/StockCard.client'), { 
   ssr: false,
   loading: () => <div>Loading Stock Data...</div>
 });`}
-                                    </code>
+                                        </code>
                                     </pre>
                                 </div>
                                 <p className="mb-2 text-sm italic">How the NoSSR wrapper works under the hood:</p>
@@ -339,19 +339,19 @@ const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-yellow-50 rounded-lg border border-yellow-200">
                         <h2 className="font-bold text-xl text-yellow-800 mb-3">Server Components as Children of Client Components</h2>
                         <div className="space-y-4">
                             <p className="text-yellow-900">
                                 A common source of confusion: How can a client component contain a server component?
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-yellow-200 text-yellow-900">
                                 <div className="mb-3">
                                     <pre className="bg-yellow-50 p-2 block rounded overflow-x-auto">
-                                    <code>
-{`// JSX usage
+                                        <code>
+                                            {`// JSX usage
 <ClientComponent>
   <ServerComponent/>
 </ClientComponent>
@@ -368,10 +368,10 @@ export const ClientComponent = ({children}) => {
 // ServerComponent.js
 export const ServerComponent = () => 
   <div className="box">Server Component content</div>;`}
-                                    </code>
+                                        </code>
                                     </pre>
                                 </div>
-                                
+
                                 <h3 className="font-semibold mb-2">What's actually happening:</h3>
                                 <ol className="list-decimal pl-5 space-y-2">
                                     <li>The server runs <code className="bg-yellow-100 px-1">ServerComponent</code> at request-time, on the server</li>
@@ -383,14 +383,14 @@ export const ServerComponent = () =>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-green-50 rounded-lg border border-green-200">
                         <h2 className="font-bold text-xl text-green-800 mb-3">The "Box" Mental Model</h2>
                         <div className="space-y-4">
                             <p className="text-green-900">
                                 To understand Client and Server Components, think of the Client Component as a box:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-green-200">
                                 <div className="flex flex-col md:flex-row gap-4 items-center mb-4">
                                     <div className="flex-1 border-2 border-dashed border-green-300 p-4 text-center">
@@ -408,25 +408,25 @@ export const ServerComponent = () =>
                                         </ul>
                                     </div>
                                 </div>
-                                
+
                                 <div className="text-green-900 border-t border-green-100 pt-3">
-                                    <p><strong>Important:</strong> The ClientComponent can't control the ServerComponent at runtime. 
-                                    If the ClientComponent changes state, it can't cause the ServerComponent to re-render with different props.</p>
+                                    <p><strong>Important:</strong> The ClientComponent can't control the ServerComponent at runtime.
+                                        If the ClientComponent changes state, it can't cause the ServerComponent to re-render with different props.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-red-50 rounded-lg border border-red-200">
                         <h2 className="font-bold text-xl text-red-800 mb-3">Importing vs Nesting Components</h2>
                         <div className="space-y-4">
                             <div className="bg-white p-4 rounded border border-red-200 text-red-900">
                                 <h3 className="font-semibold mb-2">The One Rule To Remember:</h3>
                                 <p className="p-2 bg-red-50 border border-red-100 font-medium">
-                                    The deciding factor for what is treated as a Client Component is what is imported in the code, 
+                                    The deciding factor for what is treated as a Client Component is what is imported in the code,
                                     not how components are nested in the JSX.
                                 </p>
-                                
+
                                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <h4 className="font-semibold text-red-700 mb-2">What Works:</h4>
@@ -436,7 +436,7 @@ export const ServerComponent = () =>
                                             <li>Importing Client Components into Server Components</li>
                                         </ul>
                                     </div>
-                                    
+
                                     <div>
                                         <h4 className="font-semibold text-red-700 mb-2">What Doesn't Work:</h4>
                                         <ul className="list-disc pl-5 space-y-1">
@@ -449,7 +449,7 @@ export const ServerComponent = () =>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-indigo-50 rounded-lg border border-indigo-200">
                         <h2 className="font-bold text-xl text-indigo-800 mb-3">Client-Side Data Fetching Flow</h2>
                         <div className="space-y-4">
@@ -462,33 +462,33 @@ export const ServerComponent = () =>
                                     <li><strong>Data Arrival:</strong> Components update with real data</li>
                                 </ol>
                             </div>
-                            
+
                             <p className="text-indigo-900">
-                                Notice that each API request has a different simulated delay (1500ms to 3000ms), 
-                                causing components to load at different times. This waterfall pattern is typical 
+                                Notice that each API request has a different simulated delay (1500ms to 3000ms),
+                                causing components to load at different times. This waterfall pattern is typical
                                 in client-side rendering.
                             </p>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-purple-50 rounded-lg border border-purple-200">
                         <h2 className="font-bold text-xl text-purple-800 mb-3">React Suspense and NoSSR Behind the Scenes</h2>
                         <div className="space-y-4">
                             <p className="text-purple-900">
-                                Under the hood, <code className="bg-purple-100 px-1 rounded">next/dynamic</code> with <code className="bg-purple-100 px-1 rounded">ssr: false</code> generates 
+                                Under the hood, <code className="bg-purple-100 px-1 rounded">next/dynamic</code> with <code className="bg-purple-100 px-1 rounded">ssr: false</code> generates
                                 a Virtual DOM structure that looks like:
                             </p>
-                            
+
                             <div className="bg-white p-4 rounded border border-purple-200 font-mono text-sm text-purple-900 overflow-x-auto">
                                 <pre className="bg-purple-50 p-2 rounded">
-{`// Simplified representation of the generated Virtual DOM:
+                                    {`// Simplified representation of the generated Virtual DOM:
 c:"$Sreact.suspense"
 ["$","$c",null,{
   "fallback":["$","div",null,{"className":"client-component","children":"Loading..."}],
   "children":["$","$Ld",null,{"children":"$Le"}]
 }]`}
                                 </pre>
-                                
+
                                 <div className="mt-3 text-sm">
                                     <ol className="list-decimal pl-5 space-y-1">
                                         <li>React Suspense component with a fallback (loading state)</li>
@@ -500,7 +500,7 @@ c:"$Sreact.suspense"
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="p-6 bg-orange-50 rounded-lg border border-orange-200">
                         <h2 className="font-bold text-xl text-orange-800 mb-3">Best Practices for Client/Server Components</h2>
                         <div className="bg-white p-4 rounded border border-orange-200">
@@ -515,7 +515,7 @@ c:"$Sreact.suspense"
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="mt-8 p-4 border-t border-gray-200 text-center text-gray-500 text-sm">
                     <p>Presentation created for team: {new Date().toLocaleDateString()}</p>
                     <p>Page rendered client-side with dynamic imports and delayed data loading</p>
