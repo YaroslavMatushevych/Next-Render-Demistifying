@@ -3,42 +3,34 @@
 import { useEffect, useState } from 'react';
 import {
     fetchStockData,
-    fetchWeatherData,
-    fetchNewsData,
-    fetchCryptoData
+    fetchWeatherData
 } from '@/lib/api-utils';
 import dynamic from 'next/dynamic';
 
-// Client components with dynamic imports and no SSR
-const StockCardClient = dynamic(() => import('@/components/client/StockCard.client'), { 
-  ssr: false,
-});
-const WeatherCardClient = dynamic(() => import('@/components/client/WeatherCard.client'), { 
-  ssr: false,
-});
-const NewsCardClient = dynamic(() => import('@/components/client/NewsCard.client'), { 
-  ssr: false,
-});
-const CryptoCardClient = dynamic(() => import('@/components/client/CryptoCard.client'), { 
+// SECTION 1: CLIENT COMPONENTS WITH SSR: FALSE AND DYNAMIC IMPORT
+// These components will only render on the client and never on the server
+const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), { 
   ssr: false,
 });
 
-export default function ClientComponentsPresentation() {
+const WeatherCardNoSSR = dynamic(() => import('@/components/client/WeatherCard.client'), { 
+  ssr: false,
+});
+
+// SECTION 2: REGULAR CLIENT COMPONENTS WITHOUT SSR: FALSE
+// These are normal client components that will participate in SSR
+// but will be hydrated on the client
+import StockCardClient from '@/components/client/StockCard.client';
+import WeatherCardClient from '@/components/client/WeatherCard.client';
+
+export default function ClientComponentsComparison() {
     // State for each data type
     const [stockData, setStockData] = useState(undefined);
     const [weatherData, setWeatherData] = useState(undefined);
-    const [newsData, setNewsData] = useState(undefined);
-    const [cryptoData, setCryptoData] = useState(undefined);
-
+    
     // Loading states
     const [stockLoading, setStockLoading] = useState(true);
     const [weatherLoading, setWeatherLoading] = useState(true);
-    const [newsLoading, setNewsLoading] = useState(true);
-    const [cryptoLoading, setCryptoLoading] = useState(true);
-
-    // Track overall app load time
-    const [pageLoadTime, setPageLoadTime] = useState(0);
-    const startTime = Date.now();
 
     // Fetch all data on component mount
     useEffect(() => {
@@ -48,7 +40,7 @@ export default function ClientComponentsPresentation() {
                 .then(data => {
                     setStockData(data);
                     setStockLoading(false);
-                    console.log('Stock data loaded after', (Date.now() - startTime), 'ms');
+                    console.log('Stock data loaded');
                 });
 
             // Fetch weather data with simulated delay
@@ -56,23 +48,7 @@ export default function ClientComponentsPresentation() {
                 .then(data => {
                     setWeatherData(data);
                     setWeatherLoading(false);
-                    console.log('Weather data loaded after', (Date.now() - startTime), 'ms');
-                });
-
-            // Fetch news data with simulated delay
-            fetchNewsData(3000)
-                .then(data => {
-                    setNewsData(data);
-                    setNewsLoading(false);
-                    console.log('News data loaded after', (Date.now() - startTime), 'ms');
-                });
-
-            // Fetch crypto data with simulated delay
-            fetchCryptoData(2500)
-                .then(data => {
-                    setCryptoData(data);
-                    setCryptoLoading(false);
-                    console.log('Crypto data loaded after', (Date.now() - startTime), 'ms');
+                    console.log('Weather data loaded');
                 });
         };
 
@@ -82,45 +58,234 @@ export default function ClientComponentsPresentation() {
     return (
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 sm:px-0">
-                <h1 className="text-3xl font-bold text-purple-800 mb-2">Client Components Presentation</h1>
+                <h1 className="text-3xl font-bold text-blue-800 mb-2">Client Components Comparison</h1>
                 <p className="mb-6 text-gray-600">
-                    This page demonstrates client-side rendering patterns in Next.js.
+                    This page demonstrates two different client-side rendering patterns in Next.js.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Stock Data */}
-                    <div className="relative">
-                        <StockCardClient data={stockData} loading={stockLoading} />
-                        <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
-                            Client Component with dynamic import
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    {/* LEFT SIDE: NO SSR COMPONENTS */}
+                    <div className="space-y-6">
+                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h2 className="text-2xl font-bold text-blue-800 mb-3">
+                                No SSR Components
+                            </h2>
+                            <p className="text-blue-800 mb-4">
+                                Components with <code className="bg-blue-100 px-1 rounded">ssr: false</code> and dynamic import
+                            </p>
+                        </div>
+
+                        {/* Stock Card with NO SSR */}
+                        <div className="relative">
+                            <StockCardNoSSR data={stockData} loading={stockLoading} />
+                            <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
+                                No SSR (ssr: false)
+                            </div>
+                        </div>
+
+                        {/* Weather Card with NO SSR */}
+                        <div className="relative">
+                            <WeatherCardNoSSR data={weatherData} loading={weatherLoading} />
+                            <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
+                                No SSR (ssr: false)
+                            </div>
                         </div>
                     </div>
 
-                    {/* Weather Data */}
-                    <div className="relative">
-                        <WeatherCardClient data={weatherData} loading={weatherLoading} />
-                        <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
-                            Client Component with dynamic import
+                    {/* RIGHT SIDE: REGULAR CLIENT COMPONENTS */}
+                    <div className="space-y-6">
+                        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                            <h2 className="text-2xl font-bold text-green-800 mb-3">
+                                Regular Client Components
+                            </h2>
+                            <p className="text-green-800 mb-4">
+                                Client components with normal import (participates in SSR)
+                            </p>
                         </div>
-                    </div>
 
-                    {/* News Data */}
-                    <div className="relative">
-                        <NewsCardClient data={newsData} loading={newsLoading} />
-                        <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
-                            Client Component with dynamic import
+                        {/* Stock Card with Regular Import */}
+                        <div className="relative">
+                            <StockCardClient data={stockData} loading={stockLoading} />
+                            <div className="absolute top-2 right-2 text-xs bg-green-100 rounded px-2 py-1">
+                                Regular Client Component
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Crypto Data */}
-                    <div className="relative">
-                        <CryptoCardClient data={cryptoData} loading={cryptoLoading} />
-                        <div className="absolute top-2 right-2 text-xs bg-blue-100 rounded px-2 py-1">
-                            Client Component with dynamic import
+                        {/* Weather Card with Regular Import */}
+                        <div className="relative">
+                            <WeatherCardClient data={weatherData} loading={weatherLoading} />
+                            <div className="absolute top-2 right-2 text-xs bg-green-100 rounded px-2 py-1">
+                                Regular Client Component
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                {/* EXPLANATIONS */}
+                <div className="space-y-8 mt-12">
+                    <div className="p-6 bg-blue-50 rounded-lg border border-blue-200">
+                        <h2 className="font-bold text-xl text-blue-800 mb-3">No SSR Components Explained</h2>
+                        <div className="space-y-4">
+                            <p className="text-blue-900">
+                                <code className="bg-blue-100 px-1 rounded">ssr: false</code> with dynamic import creates 
+                                components that only render on the client and never on the server:
+                            </p>
+                            
+                            <div className="bg-white p-4 rounded border border-blue-200">
+                                <pre className="bg-blue-50 p-3 rounded overflow-x-auto text-sm">
+{`const StockCardNoSSR = dynamic(() => import('@/components/client/StockCard.client'), { 
+  ssr: false,
+  loading: () => <div>Loading Stock Component...</div>
+});`}
+                                </pre>
+                                
+                                <div className="mt-4">
+                                    <h3 className="font-semibold text-blue-700 mb-2">Key characteristics:</h3>
+                                    <ul className="list-disc pl-5 space-y-1 text-blue-800">
+                                        <li><strong>No Server Rendering:</strong> These components do not render during SSR at all</li>
+                                        <li><strong>Loading Fallback:</strong> The fallback UI is shown in the initial HTML</li>
+                                        <li><strong>Dynamic Import:</strong> Component code is loaded in a separate JS chunk</li>
+                                        <li><strong>Delayed Appearance:</strong> Components appear only after JS loads and executes</li>
+                                        <li><strong>Better for SEO-insensitive content:</strong> Like dashboards or authenticated areas</li>
+                                    </ul>
+                                </div>
+                                
+                                <div className="mt-4 p-3 bg-blue-50 rounded text-blue-800">
+                                    <h4 className="font-semibold mb-1">What's happening under the hood:</h4>
+                                    <ol className="list-decimal pl-5 space-y-1 text-sm">
+                                        <li>Initial HTML contains only the loading placeholder</li>
+                                        <li>JavaScript loads and initializes React</li>
+                                        <li>React Suspense boundary created for the dynamic import</li>
+                                        <li>Component code is fetched in a separate bundle</li>
+                                        <li>Once loaded, React renders the actual component</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="p-6 bg-green-50 rounded-lg border border-green-200">
+                        <h2 className="font-bold text-xl text-green-800 mb-3">Regular Client Components Explained</h2>
+                        <div className="space-y-4">
+                            <p className="text-green-900">
+                                Regular client components are imported directly and participate in server-side rendering:
+                            </p>
+                            
+                            <div className="bg-white p-4 rounded border border-green-200">
+                                <pre className="bg-green-50 p-3 rounded overflow-x-auto text-sm">
+{`'use client';
+
+// Regular direct import
+import StockCardClient from '@/components/client/StockCardRegular.client';`}
+                                </pre>
+                                
+                                <div className="mt-4">
+                                    <h3 className="font-semibold text-green-700 mb-2">Key characteristics:</h3>
+                                    <ul className="list-disc pl-5 space-y-1 text-green-800">
+                                        <li><strong>Server-side Rendering:</strong> Initial HTML includes component output</li>
+                                        <li><strong>Hydration:</strong> Component is hydrated when JS loads</li>
+                                        <li><strong>No Loading Fallback Needed:</strong> Initial HTML already has content</li>
+                                        <li><strong>Faster First Paint:</strong> Content visible before JS loads</li>
+                                        <li><strong>Better for SEO-critical content:</strong> Like landing pages or public content</li>
+                                    </ul>
+                                </div>
+                                
+                                <div className="mt-4 p-3 bg-green-50 rounded text-green-800">
+                                    <h4 className="font-semibold mb-1">What's happening under the hood:</h4>
+                                    <ol className="list-decimal pl-5 space-y-1 text-sm">
+                                        <li>Server renders the component with initial props</li>
+                                        <li>Initial HTML includes the component's output (static/non-interactive)</li>
+                                        <li>JavaScript loads and initializes React</li>
+                                        <li>Hydration connects React to existing DOM nodes</li>
+                                        <li>Component becomes interactive after hydration</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="p-6 bg-purple-50 rounded-lg border border-purple-200">
+                        <h2 className="font-bold text-xl text-purple-800 mb-3">When to Use Each Approach</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-white p-4 rounded border border-purple-100">
+                                <h3 className="font-semibold text-purple-700 mb-2">Use No SSR when:</h3>
+                                <ul className="list-disc pl-5 space-y-1 text-purple-800">
+                                    <li>Component relies on browser-only APIs (window, localStorage)</li>
+                                    <li>Component would cause SSR errors if rendered on server</li>
+                                    <li>Content is behind authentication anyway</li>
+                                    <li>The component is large and would slow down initial SSR</li>
+                                    <li>Component needs to be lazy-loaded for performance</li>
+                                </ul>
+                            </div>
+                            
+                            <div className="bg-white p-4 rounded border border-purple-100">
+                                <h3 className="font-semibold text-purple-700 mb-2">Use Regular Client Components when:</h3>
+                                <ul className="list-disc pl-5 space-y-1 text-purple-800">
+                                    <li>SEO is important for the content</li>
+                                    <li>First Contentful Paint needs to be fast</li>
+                                    <li>Component is needed for core page layout</li>
+                                    <li>You want to avoid content layout shifts</li>
+                                    <li>Component doesn't rely heavily on browser-only APIs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="p-6 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <h2 className="font-bold text-xl text-yellow-800 mb-3">Dynamic Import Without ssr: false</h2>
+                        <div className="space-y-4">
+                            <p className="text-yellow-900">
+                                You can also use dynamic import <em>without</em> setting <code className="bg-yellow-100 px-1 rounded">ssr: false</code> 
+                                to get code splitting while still preserving server-side rendering:
+                            </p>
+                            
+                            <div className="bg-white p-4 rounded border border-yellow-200">
+                                <pre className="bg-yellow-50 p-3 rounded overflow-x-auto text-sm">
+{`// Dynamic import WITH server-side rendering
+const DynamicComponent = dynamic(() => import('@/components/MyComponent'), {
+  // ssr: true is the default, no need to specify
+  loading: () => <div>Loading...</div>
+});`}
+                                </pre>
+                                
+                                <div className="mt-4">
+                                    <h3 className="font-semibold text-yellow-700 mb-2">Key characteristics:</h3>
+                                    <ul className="list-disc pl-5 space-y-1 text-yellow-800">
+                                        <li><strong>Server Rendered:</strong> Component is rendered during SSR</li>
+                                        <li><strong>Code Split:</strong> Component still loaded in separate JS chunk</li>
+                                        <li><strong>Hydration:</strong> Component is hydrated like normal client components</li>
+                                        <li><strong>Best of Both Worlds:</strong> SEO benefits + code splitting</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="p-6 bg-red-50 rounded-lg border border-red-200">
+                        <h2 className="font-bold text-xl text-red-800 mb-3">Common Pitfalls to Avoid</h2>
+                        <div className="bg-white p-4 rounded border border-red-100">
+                            <ul className="list-disc pl-5 space-y-2 text-red-800">
+                                <li>
+                                    <strong>Browser-only code in SSR components:</strong> Using window/document in regular client 
+                                    components without checks can cause SSR errors
+                                </li>
+                                <li>
+                                    <strong>Overusing ssr: false:</strong> Disabling SSR unnecessarily hurts performance and SEO
+                                </li>
+                                <li>
+                                    <strong>Layout shifts:</strong> NoSSR components can cause layout shifts when they load
+                                </li>
+                                <li>
+                                    <strong>Missing loading states:</strong> Always provide loading UI for NoSSR components
+                                </li>
+                                <li>
+                                    <strong>Large bundles:</strong> Dynamic imports should be used for code-splitting large components
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 {/* Explanations for the presentation */}
                 <div className="mt-8 space-y-6">
                     <div className="p-6 bg-purple-50 rounded-lg border border-purple-200">

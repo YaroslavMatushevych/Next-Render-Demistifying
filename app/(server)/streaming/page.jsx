@@ -54,9 +54,9 @@ export async function NestedOuter() {
         </div>
       </div>
     );
-  }
+}
 
-  // Server component that simulates 3s delay
+// Server component that simulates 3s delay
 export async function NestedInner() {
     await new Promise((res) => setTimeout(res, 3000));
     return (
@@ -67,7 +67,7 @@ export async function NestedInner() {
         </div>
       </div>
     );
-  }
+}
   
   
 export default function StreamingPage() {
@@ -84,8 +84,8 @@ export default function StreamingPage() {
             </div>
 
             {/* Main content area with streaming cards */}
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6"> */}
-                {/* <Suspense fallback={<LoadingCard label="Stock Component Streaming" />}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Suspense fallback={<LoadingCard label="Stock Component Streaming" />}>
                     <StreamingCard
                         label="Server Component + Suspense"
                         fetcher={fetchStockData}
@@ -120,58 +120,50 @@ export default function StreamingPage() {
                         delay={2500}
                     />
                 </Suspense>
-            </div> */}
+            </div>
 
             {/* Nested Suspense Demonstration */}
-<div className="mt-12">
-  <h2 className="text-2xl font-bold text-blue-800 mb-4">Nested Suspense Boundaries</h2>
-  <p className="text-gray-600 mb-6">
-    This section demonstrates how nested Suspense boundaries work in React Server Components.
-  </p>
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4">Nested Suspense Boundaries</h2>
+              <p className="text-gray-600 mb-6">
+                This section demonstrates how nested Suspense boundaries work in React Server Components.
+              </p>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {/* Example 1: Waterfall */}
-    <div className="border border-gray-200 rounded-lg p-6 bg-white">
-      <h3 className="text-lg font-semibold text-blue-700 mb-3">Waterfall Loading</h3>
-      <p className="text-sm text-gray-600 mb-4">
-        Both components wait to resolve before rendering (6s total).
-      </p>
-      <Suspense fallback={
-        <div className="h-32 flex items-center justify-center">
-          <div className="text-center text-gray-600 text-sm">
-            Loading both components (6s total)...
-          </div>
-        </div>
-      }>
-        <div className="space-y-4">
-          <NestedOuter delay={3000} label="Outer Component (3s)" />
-          <NestedInner delay={3000} label="Inner Component (3s)" />
-        </div>
-      </Suspense>
-    </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Example 1: Waterfall */}
+                <div className="border border-gray-200 rounded-lg p-6 bg-white">
+                  <h3 className="text-lg font-semibold text-blue-700 mb-3">Waterfall Loading</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Components load sequentially (outer first, then inner) for 6s total.
+                  </p>
+                  <div className="space-y-4">
+                    <Suspense fallback={<div className="text-sm text-gray-600">Loading outer...</div>}>
+                      <NestedOuter />
+                      <Suspense fallback={<div className="text-sm text-gray-600 mt-4">Loading inner...</div>}>
+                        <NestedInner />
+                      </Suspense>
+                    </Suspense>
+                  </div>
+                </div>
 
-    {/* Example 2: Progressive */}
-{/* Progressive Suspense (nested boundaries) */}
-<div className="border border-gray-200 rounded-lg p-6 bg-white">
-  <h3 className="text-lg font-semibold text-blue-700 mb-3">Progressive Loading</h3>
-  <p className="text-sm text-gray-600 mb-4">
-    Each Suspense resolves independently. Outer shows after 3s, inner after 6s total.
-  </p>
-
-  <div className="space-y-4">
-    <Suspense fallback={<div className="text-sm text-gray-600">Loading outer...</div>}>
-      <NestedOuter />
-    </Suspense>
-
-    <Suspense fallback={<div className="text-sm text-gray-600">Loading inner...</div>}>
-      <NestedInner />
-    </Suspense>
-  </div>
-</div>
-  </div>
-</div>
-
-
+                {/* Example 2: Progressive */}
+                <div className="border border-gray-200 rounded-lg p-6 bg-white">
+                  <h3 className="text-lg font-semibold text-blue-700 mb-3">Progressive Loading</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Each Suspense resolves independently. Outer shows after 3s, inner after 3s.
+                  </p>
+                  <div className="space-y-4">
+                    <Suspense fallback={<div className="text-sm text-gray-600">Loading outer...</div>}>
+                      <NestedOuter />
+                    </Suspense>
+                    
+                    <Suspense fallback={<div className="text-sm text-gray-600">Loading inner...</div>}>
+                      <NestedInner />
+                    </Suspense>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Streaming Explanation */}
             <div className="mt-12">

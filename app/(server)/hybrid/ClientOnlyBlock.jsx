@@ -1,4 +1,5 @@
 'use client';
+
 import CryptoCard from '@/components/client/CryptoCard.client';
 import useSWR from 'swr';
 import { fetchCryptoData } from '@/lib/api-utils';
