@@ -617,9 +617,9 @@ export default function DashboardTemplate({ children }) {
                             Companies that have migrated from Pages Router to App Router with streaming have reported:
                         </p>
                         <ul className="mt-2 space-y-1 text-sm text-amber-700 list-disc pl-5">
-                            <li>50-70% faster perceived load times</li>
-                            <li>30% reduction in page abandonment</li>
-                            <li>25% decrease in server load</li>
+                            <li>Faster perceived load times</li>
+                            <li>Reduction in page abandonment</li>
+                            <li>Decrease in server load</li>
                             <li>Better Core Web Vitals scores</li>
                             <li>Improved SEO rankings due to faster delivery</li>
                         </ul>
